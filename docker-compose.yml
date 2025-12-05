@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      target: backend
+    ports:
+      - "8000:8000"
+    environment:
+      - TMDB_API_KEY=${TMDB_API_KEY}
+      - DATABASE_URL=sqlite:///media_collection.db
+    volumes:
+      - ./backend.py:/app/backend.py
+      - ./data:/app/data
+    command: uvicorn backend:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    image: node:18-alpine
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: npm start
+
+  # Optional: PostgreSQL for production-like environment
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=media_collection
+      - POSTGRES_USER=media_user
+      - POSTGRES_PASSWORD=media_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
