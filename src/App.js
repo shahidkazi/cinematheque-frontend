@@ -3,10 +3,15 @@ import './App.css';
 
 // Detect if running on local network and adjust API URL accordingly
 const getApiUrl = () => {
+  // Check both possible env variable names
+  let apiUrl = process.env.REACT_APP_API_BASE_URL || process.env.REACT_APP_API_URL;
+  
   // If environment variable is set, use it
-  if (process.env.REACT_APP_API_URL) {
-    console.log('Using API URL from env:', process.env.REACT_APP_API_URL);
-    return process.env.REACT_APP_API_URL;
+  if (apiUrl) {
+    // Remove trailing slash if present
+    apiUrl = apiUrl.replace(/\/$/, '');
+    console.log('Using API URL from env:', apiUrl);
+    return apiUrl;
   }
   
   // If accessing from localhost, use localhost
@@ -2312,6 +2317,57 @@ const App = () => {
       >
         <UserIcon />
       </button>
+      
+      {/* Mobile user menu dropdown - appears near FAB */}
+      {showUserMenu && (
+        <div 
+          className="user-menu-dropdown user-menu-dropdown-mobile"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="user-menu-header">
+            <UserIcon />
+            <span className="user-menu-name">{username}</span>
+          </div>
+          
+          <button 
+            className="user-menu-item"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowUserMenu(false);
+              setEditingMedia(null);
+              setShowAddModal(true);
+            }}
+          >
+            <span className="user-menu-icon">+</span>
+            Add Media
+          </button>
+          
+          <button 
+            className="user-menu-item"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowUserMenu(false);
+              exportToCSV();
+            }}
+          >
+            <DownloadIcon />
+            Export to CSV
+          </button>
+          
+          <div className="user-menu-divider"></div>
+          
+          <button 
+            className="user-menu-logout"
+            onClick={async (e) => {
+              e.stopPropagation();
+              setShowUserMenu(false);
+              await handleLogout();
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      )}
       
       {activeView === 'collection' && (
         <div className="filters">

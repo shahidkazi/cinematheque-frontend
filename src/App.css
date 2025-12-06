@@ -2207,37 +2207,32 @@ html, body {
     display: none;
   }
   
+  /* Hide header dropdown on mobile (we use mobile dropdown instead) */
+  .header-user-menu .user-menu-dropdown {
+    display: none !important;
+  }
+  
   /* Show mobile user FAB */
   .user-btn-mobile {
     display: flex;
   }
   
-  /* Adjust user menu dropdown for mobile - CRITICAL FIX */
-  .user-menu-dropdown {
+  /* Style mobile dropdown - appears above FAB button */
+  .user-menu-dropdown-mobile {
     position: fixed !important;
-    bottom: 5rem !important;
+    bottom: 5rem !important;      /* 3rem above FAB button (which is at bottom: 2rem) */
     right: 1rem !important;
     left: auto !important;
     top: auto !important;
     transform: none !important;
     min-width: 220px;
     max-width: calc(100vw - 2rem);
-    z-index: 10000 !important; /* Very high to ensure visibility */
-  }
-  
-  /* Ensure mobile FAB container doesn't interfere */
-  @media (max-width: 768px) {
-    .user-menu-container {
-      position: static !important;
-    }
-    
-    .user-menu-dropdown {
-      position: fixed !important;
-      bottom: 5rem !important;
-      right: 1rem !important;
-      top: auto !important;
-      left: auto !important;
-    }
+    z-index: 10000 !important;
+    background: linear-gradient(135deg, rgba(42, 41, 40, 0.98) 0%, rgba(58, 51, 48, 0.98) 100%);
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    box-shadow: var(--shadow-deep);
+    animation: fadeIn 0.2s ease;
   }
   
   .filters {
