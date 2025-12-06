@@ -2212,7 +2212,7 @@ html, body {
     display: flex;
   }
   
-  /* Adjust user menu dropdown for mobile */
+  /* Adjust user menu dropdown for mobile - CRITICAL FIX */
   .user-menu-dropdown {
     position: fixed !important;
     bottom: 5rem !important;
@@ -2222,7 +2222,22 @@ html, body {
     transform: none !important;
     min-width: 220px;
     max-width: calc(100vw - 2rem);
-    z-index: 1001;
+    z-index: 10000 !important; /* Very high to ensure visibility */
+  }
+  
+  /* Ensure mobile FAB container doesn't interfere */
+  @media (max-width: 768px) {
+    .user-menu-container {
+      position: static !important;
+    }
+    
+    .user-menu-dropdown {
+      position: fixed !important;
+      bottom: 5rem !important;
+      right: 1rem !important;
+      top: auto !important;
+      left: auto !important;
+    }
   }
   
   .filters {
