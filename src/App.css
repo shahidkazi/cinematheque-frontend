@@ -2214,12 +2214,14 @@ html, body {
   
   /* Adjust user menu dropdown for mobile */
   .user-menu-dropdown {
-    position: fixed;
-    bottom: 5rem;
-    right: 1rem;
-    left: auto;
-    top: auto;
+    position: fixed !important;
+    bottom: 5rem !important;
+    right: 1rem !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
     min-width: 220px;
+    max-width: calc(100vw - 2rem);
     z-index: 1001;
   }
   
